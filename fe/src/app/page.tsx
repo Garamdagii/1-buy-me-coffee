@@ -1,4 +1,5 @@
-import { CreateUsername } from "@/components/createUser";
+
+import { CreateAccount } from "@/components/createAccount";
 
 export default function Home() {
   return <div>hello</div>;
