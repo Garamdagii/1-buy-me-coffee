@@ -22,6 +22,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const formSchema = z.object({
   email: z
@@ -49,11 +50,11 @@ export const LogIn = ({ onClick }: { onClick: () => void }) => {
       console.log(response.data);
     } catch (error) {
       console.error(error, "err");
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 404)
-      ) {
-        setError(error.response.data.message);
+      // if (
+      //   error.response &&
+      //   (error.response.status === 401 || error.response.status === 404)
+      // ) {
+      //   setError(error.response.data.message);
       }
     }
     // console.log(values);

@@ -1,6 +1,9 @@
-
-import { CreateAccount } from "@/components/createAccount";
+import { CreateProfile } from "@/components/profile/createProfile";
 
 export default function Home() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <CreateProfile />
+    </div>
+  );
 }
