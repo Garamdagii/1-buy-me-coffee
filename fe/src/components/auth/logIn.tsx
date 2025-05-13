@@ -18,10 +18,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const formSchema = z.object({
   email: z
@@ -31,7 +32,7 @@ const formSchema = z.object({
   password: z.string().min(4, { message: "Please enter at least 4 letters" }),
 });
 
-export const LogIn = ({ onClick }: { onClick: () => void }) => {
+export const LogInAccount = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,21 +43,14 @@ export const LogIn = ({ onClick }: { onClick: () => void }) => {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.post("http://localhost:8000/auth", {
+      const response = await axios.post("http://localhost:8000/signin", {
         email: values.email,
         password: values.password,
       });
       console.log(response.data);
     } catch (error) {
       console.error(error, "err");
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 404)
-      ) {
-        setError(error.response.data.message);
-      }
     }
-    // console.log(values);
   };
 
   return (
@@ -113,7 +107,7 @@ export const LogIn = ({ onClick }: { onClick: () => void }) => {
             </CardContent>
             <CardFooter>
               <Button
-                onClick={onClick}
+                type="submit"
                 className="flex px-4 py-2 w-full h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]"
               >
                 Continue

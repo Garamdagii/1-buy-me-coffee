@@ -18,18 +18,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
 
 const formSchema = z.object({
   username: z
     .string({ required_error: "Username" })
-    .min(8, { message: "Please enter at least 8 letters" }),
+    .min(2, { message: "Please enter at least 2 letters" }),
 });
 
-export const CreateUsername = ({ onClick }: { onClick: () => void }) => {
+export const CreateUsername = () => {
+  const [step, setStep] = useState<number>(0);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,8 +40,16 @@ export const CreateUsername = ({ onClick }: { onClick: () => void }) => {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values.username);
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("http://localhost:8000/signup", {
+        username: values.username,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error, "err");
+    }
+    setStep(step + 1);
   };
 
   return (
@@ -74,7 +85,7 @@ export const CreateUsername = ({ onClick }: { onClick: () => void }) => {
             </CardContent>
             <CardFooter>
               <Button
-                onClick={onClick}
+                type="submit"
                 className="flex px-4 py-2 w-full h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]"
               >
                 Continue
