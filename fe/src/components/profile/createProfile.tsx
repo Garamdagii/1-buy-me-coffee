@@ -24,9 +24,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useState } from "react";
+import { FileSliders } from "lucide-react";
 
 const formSchema = z.object({
-  profileImage: z.instanceof(FileList).optional(),
+  profileImage: z.instanceof(File).optional(),
   profileName: z.string({ required_error: "Enter name" }).min(2, {
     message: "Name must be at least 2 characters.",
   }),
@@ -48,7 +49,7 @@ export const CreateProfile = () => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     // if (data.profileImage) {
-    //   const url = URL.createObjectURL();
+    //   const url = URL.createObjectURL(data.profileImage);
     //   setImageURL(url);
     // }
     // console.log(imageURL);
