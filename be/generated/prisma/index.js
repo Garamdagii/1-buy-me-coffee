@@ -139,7 +139,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\User\\desktop\\1-buy-me-coffee\\be\\generated\\prisma",
+      "value": "/Users/24LP7422/Desktop/1-buy-me-coffee/be/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -148,17 +148,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\User\\desktop\\1-buy-me-coffee\\be\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/24LP7422/Desktop/1-buy-me-coffee/be/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.7.0",
@@ -167,17 +166,18 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiYzcyYmY5ZGItYjY2Ni00OGRkLTk0ZTgtNjg2YTYwODE3MGNkIiwidGVuYW50X2lkIjoiMTZjNzNiNDY5Nzg1NjhhMWE0OGE1NTRkN2YxYmViZTc4MTYzNGZiMWY4MTJiYzA4ZjZjNmZhNDQzZDIzYjAxYyIsImludGVybmFsX3NlY3JldCI6ImVkOWExZGNkLTdjNTktNDVkMi04NmMxLTM2N2I5YWYxOWEyOSJ9.J7_W3jH0rBZmso_HdIJXzeqvX3TO4PdtWxo_CNawvs8"
+        "value": null
       }
     }
   },
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id       Int    @id @default(autoincrement())\n  email    String @unique\n  username String\n  password String\n}\n\nmodel Profile {\n  id              Int      @id @default(autoincrement())\n  name            String\n  about           String\n  avatarImage     String\n  socialMediaURL  String\n  backgroundImage String\n  successMessage  String\n  userId          Int\n  createdAt       DateTime @default(now())\n  updatedAt       DateTime @default(now()) @updatedAt\n}\n",
   "inlineSchemaHash": "eff1cc0516816f9f8f108dd18bf7a0e594ce03e94fea8b1c1fb304eaa135db4d",
-  "copyEngine": false
+  "copyEngine": true
 }
 
 const fs = require('fs')
@@ -214,3 +214,9 @@ const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-darwin-arm64.dylib.node")
+// file annotations for bundling tools to include these files
+path.join(__dirname, "schema.prisma");
+path.join(process.cwd(), "generated/prisma/schema.prisma")
