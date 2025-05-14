@@ -29,11 +29,13 @@ const formSchema = z.object({
       ? z.any()
       : z
           .instanceof(FileList)
-          .refine((files) => files?.length >= 1, {
-            message: "Image is required",
-          })
+          // .refine((files) => files?.length >= 1, {
+          //   message: "Image is required",
+          // })
           .transform((FileList) => FileList[0]),
-  name: z.string().min(2, { message: "Please enter at least 2 letters" }),
+  profileName: z
+    .string()
+    .min(2, { message: "Please enter at least 2 letters" }),
   about: z.string().min(2, { message: "Please enter at least 2 letters" }),
   socialMediaURL: z
     .string()
@@ -45,7 +47,7 @@ export const CreateProfile = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      profileName: "",
       about: "",
       socialMediaURL: "",
     },
@@ -60,7 +62,10 @@ export const CreateProfile = () => {
 
     // try {
     //   const response = await axios.post("http://localhost:8000/profile", {
-    //     image: imageURL,
+    //     profileName: values.profileName,
+    //     about: values.about,
+    //     socialMediaURL: values.socialMediaURL,
+    //     avatarImage: imageURL,
     //   });
     //   console.log(response.data);
     // } catch (error) {
@@ -106,7 +111,7 @@ export const CreateProfile = () => {
               />
               <FormField
                 control={form.control}
-                name="name"
+                name="profileName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Name</FormLabel>

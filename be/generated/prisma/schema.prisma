@@ -19,14 +19,11 @@ model User {
 }
 
 model Profile {
-  id              Int      @id @default(autoincrement())
-  name            String
-  about           String
-  avatarImage     String
-  socialMediaURL  String
-  backgroundImage String
-  successMessage  String
-  userId          Int
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now()) @updatedAt
+  id             Int      @id @default(autoincrement())
+  profileName    String
+  about          String
+  avatarImage    String
+  socialMediaURL String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
 }
