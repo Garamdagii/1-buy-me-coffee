@@ -3,7 +3,14 @@ import Image from "next/image";
 export const LayoutImage = () => {
   return (
     <div className="flex flex-col gap-10 justify-center items-center w-[455px]">
-      <Image width={240} height={240} priority src="/logo.png" alt="logo" />
+      <Image
+        width={240}
+        height={240}
+        priority
+        src="/logo.png"
+        alt="logo"
+        style={{ width: "auto", height: "auto" }}
+      />
       <div className="flex flex-col gap-3 items-center justify-center">
         <h3 className="text-2xl font-bold text-[#09090B]">
           Fund your creative work

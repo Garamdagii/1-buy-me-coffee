@@ -21,16 +21,19 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z
     .string({ required_error: "Email is required." })
-    .min(8, { message: "Please enter at least 8 letters" })
+    .min(2, { message: "Please enter at least 2 letters" })
     .email("Please enter a valid email"),
   password: z.string().min(4, { message: "Please enter at least 4 letters" }),
 });
 
 export const LogInAccount = () => {
+  const [error, setError] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,14 +51,12 @@ export const LogInAccount = () => {
       console.log(response.data);
     } catch (error) {
       console.error(error, "err");
-      if (error instanceof ZodError) {
-        const errorMessage = error.errors.map((err) => err.message).join(", ");
-        return {
-          error: errorMessage ?? "Invalid request data",
-        };
-      } else {
-        return { success: false, error: "Unexpected error during validation" };
-      }
+      // if (
+      //   error.response &&
+      //   (error.response.status === 401 || error.response.status === 404)
+      // ) {
+      //   setError(error.response.data.message);
+      // }
     }
   };
 

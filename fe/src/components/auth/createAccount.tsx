@@ -26,9 +26,9 @@ import axios from "axios";
 const formSchema = z.object({
   email: z
     .string()
-    .min(8, { message: "Please enter at least 8 letters" })
+    .min(5, { message: "Please enter at least 5 letters" })
     .email("Please enter a valid email"),
-  password: z.string().min(4, { message: "Please enter at least 4 letters" }),
+  password: z.string().min(8, { message: "Please enter at least 8 letters" }),
 });
 
 export const CreateAccount = ({ username }: { username: string }) => {
@@ -50,14 +50,6 @@ export const CreateAccount = ({ username }: { username: string }) => {
       console.log(response.data);
     } catch (error) {
       console.error(error, "err");
-      if (error instanceof ZodError) {
-        const errorMessage = error.errors.map((err) => err.message).join(", ");
-        return {
-          error: errorMessage ?? "Invalid request data",
-        };
-      } else {
-        return { success: false, error: "Unexpected error during validation" };
-      }
     }
   };
 
