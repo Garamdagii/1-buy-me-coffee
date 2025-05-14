@@ -1,6 +1,10 @@
-
 import express from "express";
-import { createProfile, deleteProfile, findProfile, updateProfile } from "../constrollers/profile";
+import {
+  createProfile,
+  deleteProfile,
+  findProfile,
+  updateProfile,
+} from "../controllers/profile";
 
 export const profileRouter = express.Router();
 
