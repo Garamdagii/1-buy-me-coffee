@@ -129,13 +129,10 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.ProfileScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  profileName: 'profileName',
   about: 'about',
   avatarImage: 'avatarImage',
   socialMediaURL: 'socialMediaURL',
-  backgroundImage: 'backgroundImage',
-  successMessage: 'successMessage',
-  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
