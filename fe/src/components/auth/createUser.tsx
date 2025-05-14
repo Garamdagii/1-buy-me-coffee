@@ -12,7 +12,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,16 +22,21 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 const formSchema = z.object({
   username: z
-    .string({ required_error: "Username" })
+    .string({ required_error: "Username is required" })
     .min(2, { message: "Please enter at least 2 letters" }),
 });
 
-export const CreateUsername = () => {
-  const [step, setStep] = useState<number>(0);
+export const CreateUsername = ({
+  setStep,
+  setUsername,
+}: {
+  setStep: Dispatch<SetStateAction<number>>;
+  setUsername: Dispatch<SetStateAction<string>>;
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +53,8 @@ export const CreateUsername = () => {
     } catch (error) {
       console.error(error, "err");
     }
-    setStep(step + 1);
+    setUsername(values.username);
+    setStep(1);
   };
 
   return (

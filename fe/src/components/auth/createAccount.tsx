@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import {
   Card,
   CardContent,
@@ -12,7 +12,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -32,7 +31,7 @@ const formSchema = z.object({
   password: z.string().min(4, { message: "Please enter at least 4 letters" }),
 });
 
-export const CreateAccount = () => {
+export const CreateAccount = ({ username }: { username: string }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,12 +43,21 @@ export const CreateAccount = () => {
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("http://localhost:8000/user", {
+        username: username,
         email: values.email,
         password: values.password,
       });
       console.log(response.data);
     } catch (error) {
       console.error(error, "err");
+      if (error instanceof ZodError) {
+        const errorMessage = error.errors.map((err) => err.message).join(", ");
+        return {
+          error: errorMessage ?? "Invalid request data",
+        };
+      } else {
+        return { success: false, error: "Unexpected error during validation" };
+      }
     }
   };
 
@@ -63,7 +71,7 @@ export const CreateAccount = () => {
           >
             <CardHeader>
               <CardTitle className="text-2xl font-semibold leading-[32px] text-[#09090B]">
-                Welcome,
+                Welcome, {username}
               </CardTitle>
               <CardDescription className="text-sm leading-[20px] text-[#71717A]">
                 Connect email and set a password
