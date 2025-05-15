@@ -22,6 +22,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { uploadImage } from "../../../utils/image-upload";
+import { Camera } from "lucide-react";
 
 const formSchema = z.object({
   avatarImage:
@@ -37,13 +39,10 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Please enter at least 2 letters" }),
   about: z.string().min(2, { message: "Please enter at least 2 letters" }),
-  socialMediaURL: z
-    .string()
-    .min(2, { message: "Please enter at least 2 letters" }),
+  socialMediaURL: z.string().url(),
 });
 
 export const CreateProfile = () => {
-  const [imageURL, setImageURL] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,24 +52,24 @@ export const CreateProfile = () => {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    if (values.avatarImage) {
-      const url = URL.createObjectURL(values.avatarImage);
-      setImageURL(url);
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!values.avatarImage) {
+      console.log("error");
+      return;
     }
-    console.log(imageURL);
+    const imageUrl = await uploadImage(values.avatarImage);
 
-    // try {
-    //   const response = await axios.post("http://localhost:8000/profile", {
-    //     profileName: values.profileName,
-    //     about: values.about,
-    //     socialMediaURL: values.socialMediaURL,
-    //     avatarImage: imageURL,
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error, "err");
-    // }
+    try {
+      const response = await axios.post("http://localhost:8000/profile", {
+        profileName: values.profileName,
+        about: values.about,
+        socialMediaURL: values.socialMediaURL,
+        avatarImage: imageUrl,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error, "err");
+    }
   };
 
   const fileRef = form.register("avatarImage");
@@ -95,6 +94,11 @@ export const CreateProfile = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Add photo</FormLabel>
+
+                    <Button  className="flex rounded-full size-[160px] bg-[#FFF] border-[2px] border-dashed border-[#E4E4E7]">
+                      <Camera className="size-[28px] stroke-[#18181B] stroke-opacity-[0.5] stroke-[1.5]" />
+                    </Button>
+
                     <FormControl>
                       <Input
                         placeholder=""
