@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { arrayOutputType, z } from "zod";
 import {
   Card,
   CardContent,
@@ -13,7 +12,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,16 +19,17 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import axios from "axios";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import axios from "axios";
+} from "../ui/select";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { z } from "zod";
 
 type Data = {
   name: { common: string; official: string };
@@ -46,7 +45,7 @@ const formSchema = z.object({
   cardCVC: z.string(),
 });
 
-export const PaymentCard = () => {
+export const CartInfo = () => {
   const [countryData, setCountryData] = useState<Data[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -71,18 +70,13 @@ export const PaymentCard = () => {
       .then((res) => setCountryData(res.data));
   };
 
-  const handleCard = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    // try {
-    //   const response = await axios.post("http://localhost:8000/signup", {
-    //     username: values.username,
-    //   });
-    //   console.log(response.data);
-    //   console.log(values.username);
-    // } catch (error) {
-    //   console.error(error, "err");
-    // }
-    // setStep(1);
+  const handleCard = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("http://localhost:8000/card", values);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error, "err");
+    }
   };
 
   const selectRef = form.register("selectCountry");
