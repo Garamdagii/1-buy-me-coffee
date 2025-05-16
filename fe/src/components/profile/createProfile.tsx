@@ -19,7 +19,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { uploadImage } from "../../../utils/image-upload";
@@ -36,14 +36,16 @@ const formSchema = z.object({
           //   message: "Image is required",
           // })
           .transform((FileList) => FileList[0]),
-  profileName: z
-    .string()
-    .min(2, { message: "Please enter at least 2 letters" }),
-  about: z.string().min(2, { message: "Please enter at least 2 letters" }),
+  profileName: z.string().min(1, { message: "Please enter name" }),
+  about: z.string().min(1, { message: "Please enter info about yourself" }),
   socialMediaURL: z.string().url(),
 });
 
-export const CreateProfile = () => {
+export const CreateProfile = ({
+  setStep,
+}: {
+  setStep: Dispatch<SetStateAction<number>>;
+}) => {
   const [image, setImage] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,6 +74,7 @@ export const CreateProfile = () => {
     } catch (error) {
       console.error(error, "err");
     }
+    setStep(1);
   };
 
   const fileRef = form.register("avatarImage");
