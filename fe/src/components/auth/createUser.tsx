@@ -45,19 +45,19 @@ export const CreateUsername = ({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await axios.post("http://localhost:8000/signup", {
-        username: values.username,
-      });
-    } catch (error) {
-      console.error(error, "err");
-      if (
-        error.response &&
-        (error.response.status === 401 || error.response.status === 404)
-      ) {
-        setError(error.response.data.message);
-      }
-    }
+    // try {
+    //   const response = await axios.post("http://localhost:8000/signup", {
+    //     username: values.username,
+    //   });
+    // } catch (error) {
+    //   console.error(error, "err");
+    //   if (
+    //     error.response &&
+    //     (error.response.status === 401 || error.response.status === 404)
+    //   ) {
+    //     setError(error.response.data.message);
+    //   }
+    // }
     setUsername(values.username);
     setStep(1);
   };

@@ -2284,49 +2284,38 @@ export namespace Prisma {
 
   export type ProfileAvgAggregateOutputType = {
     id: number | null;
-    userId: number | null;
   };
 
   export type ProfileSumAggregateOutputType = {
     id: number | null;
-    userId: number | null;
   };
 
   export type ProfileMinAggregateOutputType = {
     id: number | null;
-    name: string | null;
+    profileName: string | null;
     about: string | null;
     avatarImage: string | null;
     socialMediaURL: string | null;
-    backgroundImage: string | null;
-    successMessage: string | null;
-    userId: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
   };
 
   export type ProfileMaxAggregateOutputType = {
     id: number | null;
-    name: string | null;
+    profileName: string | null;
     about: string | null;
     avatarImage: string | null;
     socialMediaURL: string | null;
-    backgroundImage: string | null;
-    successMessage: string | null;
-    userId: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
   };
 
   export type ProfileCountAggregateOutputType = {
     id: number;
-    name: number;
+    profileName: number;
     about: number;
     avatarImage: number;
     socialMediaURL: number;
-    backgroundImage: number;
-    successMessage: number;
-    userId: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -2334,49 +2323,38 @@ export namespace Prisma {
 
   export type ProfileAvgAggregateInputType = {
     id?: true;
-    userId?: true;
   };
 
   export type ProfileSumAggregateInputType = {
     id?: true;
-    userId?: true;
   };
 
   export type ProfileMinAggregateInputType = {
     id?: true;
-    name?: true;
+    profileName?: true;
     about?: true;
     avatarImage?: true;
     socialMediaURL?: true;
-    backgroundImage?: true;
-    successMessage?: true;
-    userId?: true;
     createdAt?: true;
     updatedAt?: true;
   };
 
   export type ProfileMaxAggregateInputType = {
     id?: true;
-    name?: true;
+    profileName?: true;
     about?: true;
     avatarImage?: true;
     socialMediaURL?: true;
-    backgroundImage?: true;
-    successMessage?: true;
-    userId?: true;
     createdAt?: true;
     updatedAt?: true;
   };
 
   export type ProfileCountAggregateInputType = {
     id?: true;
-    name?: true;
+    profileName?: true;
     about?: true;
     avatarImage?: true;
     socialMediaURL?: true;
-    backgroundImage?: true;
-    successMessage?: true;
-    userId?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -2475,13 +2453,10 @@ export namespace Prisma {
 
   export type ProfileGroupByOutputType = {
     id: number;
-    name: string;
+    profileName: string;
     about: string;
     avatarImage: string;
     socialMediaURL: string;
-    backgroundImage: string;
-    successMessage: string;
-    userId: number;
     createdAt: Date;
     updatedAt: Date;
     _count: ProfileCountAggregateOutputType | null;
@@ -2509,13 +2484,10 @@ export namespace Prisma {
   > = $Extensions.GetSelect<
     {
       id?: boolean;
-      name?: boolean;
+      profileName?: boolean;
       about?: boolean;
       avatarImage?: boolean;
       socialMediaURL?: boolean;
-      backgroundImage?: boolean;
-      successMessage?: boolean;
-      userId?: boolean;
       createdAt?: boolean;
       updatedAt?: boolean;
     },
@@ -2527,13 +2499,10 @@ export namespace Prisma {
   > = $Extensions.GetSelect<
     {
       id?: boolean;
-      name?: boolean;
+      profileName?: boolean;
       about?: boolean;
       avatarImage?: boolean;
       socialMediaURL?: boolean;
-      backgroundImage?: boolean;
-      successMessage?: boolean;
-      userId?: boolean;
       createdAt?: boolean;
       updatedAt?: boolean;
     },
@@ -2545,13 +2514,10 @@ export namespace Prisma {
   > = $Extensions.GetSelect<
     {
       id?: boolean;
-      name?: boolean;
+      profileName?: boolean;
       about?: boolean;
       avatarImage?: boolean;
       socialMediaURL?: boolean;
-      backgroundImage?: boolean;
-      successMessage?: boolean;
-      userId?: boolean;
       createdAt?: boolean;
       updatedAt?: boolean;
     },
@@ -2560,13 +2526,10 @@ export namespace Prisma {
 
   export type ProfileSelectScalar = {
     id?: boolean;
-    name?: boolean;
+    profileName?: boolean;
     about?: boolean;
     avatarImage?: boolean;
     socialMediaURL?: boolean;
-    backgroundImage?: boolean;
-    successMessage?: boolean;
-    userId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
   };
@@ -2575,13 +2538,10 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = $Extensions.GetOmit<
     | "id"
-    | "name"
+    | "profileName"
     | "about"
     | "avatarImage"
     | "socialMediaURL"
-    | "backgroundImage"
-    | "successMessage"
-    | "userId"
     | "createdAt"
     | "updatedAt",
     ExtArgs["result"]["profile"]
@@ -2595,13 +2555,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<
       {
         id: number;
-        name: string;
+        profileName: string;
         about: string;
         avatarImage: string;
         socialMediaURL: string;
-        backgroundImage: string;
-        successMessage: string;
-        userId: number;
         createdAt: Date;
         updatedAt: Date;
       },
@@ -3191,13 +3148,10 @@ export namespace Prisma {
    */
   interface ProfileFieldRefs {
     readonly id: FieldRef<"Profile", "Int">;
-    readonly name: FieldRef<"Profile", "String">;
+    readonly profileName: FieldRef<"Profile", "String">;
     readonly about: FieldRef<"Profile", "String">;
     readonly avatarImage: FieldRef<"Profile", "String">;
     readonly socialMediaURL: FieldRef<"Profile", "String">;
-    readonly backgroundImage: FieldRef<"Profile", "String">;
-    readonly successMessage: FieldRef<"Profile", "String">;
-    readonly userId: FieldRef<"Profile", "Int">;
     readonly createdAt: FieldRef<"Profile", "DateTime">;
     readonly updatedAt: FieldRef<"Profile", "DateTime">;
   }
@@ -3626,13 +3580,10 @@ export namespace Prisma {
 
   export const ProfileScalarFieldEnum: {
     id: "id";
-    name: "name";
+    profileName: "profileName";
     about: "about";
     avatarImage: "avatarImage";
     socialMediaURL: "socialMediaURL";
-    backgroundImage: "backgroundImage";
-    successMessage: "successMessage";
-    userId: "userId";
     createdAt: "createdAt";
     updatedAt: "updatedAt";
   };
@@ -3787,26 +3738,20 @@ export namespace Prisma {
     OR?: ProfileWhereInput[];
     NOT?: ProfileWhereInput | ProfileWhereInput[];
     id?: IntFilter<"Profile"> | number;
-    name?: StringFilter<"Profile"> | string;
+    profileName?: StringFilter<"Profile"> | string;
     about?: StringFilter<"Profile"> | string;
     avatarImage?: StringFilter<"Profile"> | string;
     socialMediaURL?: StringFilter<"Profile"> | string;
-    backgroundImage?: StringFilter<"Profile"> | string;
-    successMessage?: StringFilter<"Profile"> | string;
-    userId?: IntFilter<"Profile"> | number;
     createdAt?: DateTimeFilter<"Profile"> | Date | string;
     updatedAt?: DateTimeFilter<"Profile"> | Date | string;
   };
 
   export type ProfileOrderByWithRelationInput = {
     id?: SortOrder;
-    name?: SortOrder;
+    profileName?: SortOrder;
     about?: SortOrder;
     avatarImage?: SortOrder;
     socialMediaURL?: SortOrder;
-    backgroundImage?: SortOrder;
-    successMessage?: SortOrder;
-    userId?: SortOrder;
     createdAt?: SortOrder;
     updatedAt?: SortOrder;
   };
@@ -3817,13 +3762,10 @@ export namespace Prisma {
       AND?: ProfileWhereInput | ProfileWhereInput[];
       OR?: ProfileWhereInput[];
       NOT?: ProfileWhereInput | ProfileWhereInput[];
-      name?: StringFilter<"Profile"> | string;
+      profileName?: StringFilter<"Profile"> | string;
       about?: StringFilter<"Profile"> | string;
       avatarImage?: StringFilter<"Profile"> | string;
       socialMediaURL?: StringFilter<"Profile"> | string;
-      backgroundImage?: StringFilter<"Profile"> | string;
-      successMessage?: StringFilter<"Profile"> | string;
-      userId?: IntFilter<"Profile"> | number;
       createdAt?: DateTimeFilter<"Profile"> | Date | string;
       updatedAt?: DateTimeFilter<"Profile"> | Date | string;
     },
@@ -3832,13 +3774,10 @@ export namespace Prisma {
 
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder;
-    name?: SortOrder;
+    profileName?: SortOrder;
     about?: SortOrder;
     avatarImage?: SortOrder;
     socialMediaURL?: SortOrder;
-    backgroundImage?: SortOrder;
-    successMessage?: SortOrder;
-    userId?: SortOrder;
     createdAt?: SortOrder;
     updatedAt?: SortOrder;
     _count?: ProfileCountOrderByAggregateInput;
@@ -3857,13 +3796,10 @@ export namespace Prisma {
       | ProfileScalarWhereWithAggregatesInput
       | ProfileScalarWhereWithAggregatesInput[];
     id?: IntWithAggregatesFilter<"Profile"> | number;
-    name?: StringWithAggregatesFilter<"Profile"> | string;
+    profileName?: StringWithAggregatesFilter<"Profile"> | string;
     about?: StringWithAggregatesFilter<"Profile"> | string;
     avatarImage?: StringWithAggregatesFilter<"Profile"> | string;
     socialMediaURL?: StringWithAggregatesFilter<"Profile"> | string;
-    backgroundImage?: StringWithAggregatesFilter<"Profile"> | string;
-    successMessage?: StringWithAggregatesFilter<"Profile"> | string;
-    userId?: IntWithAggregatesFilter<"Profile"> | number;
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string;
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string;
   };
@@ -3915,89 +3851,68 @@ export namespace Prisma {
   };
 
   export type ProfileCreateInput = {
-    name: string;
+    profileName: string;
     about: string;
     avatarImage: string;
     socialMediaURL: string;
-    backgroundImage: string;
-    successMessage: string;
-    userId: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
   };
 
   export type ProfileUncheckedCreateInput = {
     id?: number;
-    name: string;
+    profileName: string;
     about: string;
     avatarImage: string;
     socialMediaURL: string;
-    backgroundImage: string;
-    successMessage: string;
-    userId: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
   };
 
   export type ProfileUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string;
+    profileName?: StringFieldUpdateOperationsInput | string;
     about?: StringFieldUpdateOperationsInput | string;
     avatarImage?: StringFieldUpdateOperationsInput | string;
     socialMediaURL?: StringFieldUpdateOperationsInput | string;
-    backgroundImage?: StringFieldUpdateOperationsInput | string;
-    successMessage?: StringFieldUpdateOperationsInput | string;
-    userId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type ProfileUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number;
-    name?: StringFieldUpdateOperationsInput | string;
+    profileName?: StringFieldUpdateOperationsInput | string;
     about?: StringFieldUpdateOperationsInput | string;
     avatarImage?: StringFieldUpdateOperationsInput | string;
     socialMediaURL?: StringFieldUpdateOperationsInput | string;
-    backgroundImage?: StringFieldUpdateOperationsInput | string;
-    successMessage?: StringFieldUpdateOperationsInput | string;
-    userId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type ProfileCreateManyInput = {
     id?: number;
-    name: string;
+    profileName: string;
     about: string;
     avatarImage: string;
     socialMediaURL: string;
-    backgroundImage: string;
-    successMessage: string;
-    userId: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
   };
 
   export type ProfileUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string;
+    profileName?: StringFieldUpdateOperationsInput | string;
     about?: StringFieldUpdateOperationsInput | string;
     avatarImage?: StringFieldUpdateOperationsInput | string;
     socialMediaURL?: StringFieldUpdateOperationsInput | string;
-    backgroundImage?: StringFieldUpdateOperationsInput | string;
-    successMessage?: StringFieldUpdateOperationsInput | string;
-    userId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
 
   export type ProfileUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number;
-    name?: StringFieldUpdateOperationsInput | string;
+    profileName?: StringFieldUpdateOperationsInput | string;
     about?: StringFieldUpdateOperationsInput | string;
     avatarImage?: StringFieldUpdateOperationsInput | string;
     socialMediaURL?: StringFieldUpdateOperationsInput | string;
-    backgroundImage?: StringFieldUpdateOperationsInput | string;
-    successMessage?: StringFieldUpdateOperationsInput | string;
-    userId?: IntFieldUpdateOperationsInput | number;
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string;
   };
@@ -4104,51 +4019,40 @@ export namespace Prisma {
 
   export type ProfileCountOrderByAggregateInput = {
     id?: SortOrder;
-    name?: SortOrder;
+    profileName?: SortOrder;
     about?: SortOrder;
     avatarImage?: SortOrder;
     socialMediaURL?: SortOrder;
-    backgroundImage?: SortOrder;
-    successMessage?: SortOrder;
-    userId?: SortOrder;
     createdAt?: SortOrder;
     updatedAt?: SortOrder;
   };
 
   export type ProfileAvgOrderByAggregateInput = {
     id?: SortOrder;
-    userId?: SortOrder;
   };
 
   export type ProfileMaxOrderByAggregateInput = {
     id?: SortOrder;
-    name?: SortOrder;
+    profileName?: SortOrder;
     about?: SortOrder;
     avatarImage?: SortOrder;
     socialMediaURL?: SortOrder;
-    backgroundImage?: SortOrder;
-    successMessage?: SortOrder;
-    userId?: SortOrder;
     createdAt?: SortOrder;
     updatedAt?: SortOrder;
   };
 
   export type ProfileMinOrderByAggregateInput = {
     id?: SortOrder;
-    name?: SortOrder;
+    profileName?: SortOrder;
     about?: SortOrder;
     avatarImage?: SortOrder;
     socialMediaURL?: SortOrder;
-    backgroundImage?: SortOrder;
-    successMessage?: SortOrder;
-    userId?: SortOrder;
     createdAt?: SortOrder;
     updatedAt?: SortOrder;
   };
 
   export type ProfileSumOrderByAggregateInput = {
     id?: SortOrder;
-    userId?: SortOrder;
   };
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {

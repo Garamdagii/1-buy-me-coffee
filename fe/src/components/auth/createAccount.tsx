@@ -22,7 +22,7 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z
@@ -44,16 +44,16 @@ export const CreateAccount = ({ username }: { username: string }) => {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await axios.post("http://localhost:8000/user", {
-        username: username,
-        email: values.email,
-        password: values.password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error, "err");
-    }
+    // try {
+    //   const response = await axios.post("http://localhost:8000/user", {
+    //     username: username,
+    //     email: values.email,
+    //     password: values.password,
+    //   });
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error(error, "err");
+    // }
 
     router.push("/profile");
   };
