@@ -24,6 +24,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { uploadImage } from "../../../utils/image-upload";
 import { Camera } from "lucide-react";
+import Image from "next/image";
 
 const formSchema = z.object({
   avatarImage:
@@ -43,6 +44,7 @@ const formSchema = z.object({
 });
 
 export const CreateProfile = () => {
+  const [image, setImage] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,7 +78,7 @@ export const CreateProfile = () => {
 
   return (
     <div className="flex w-screen h-screen justify-center items-center">
-      <Card className="flex border-none outline-none shadow-none w-[407px] p-6 rounded-lg">
+      <Card className="flex border-none outline-none shadow-none w-[510px] gap-6">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
@@ -95,24 +97,46 @@ export const CreateProfile = () => {
                   <FormItem>
                     <FormLabel>Add photo</FormLabel>
 
-                    <Button  className="flex rounded-full size-[160px] bg-[#FFF] border-[2px] border-dashed border-[#E4E4E7]">
-                      <Camera className="size-[28px] stroke-[#18181B] stroke-opacity-[0.5] stroke-[1.5]" />
-                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="flex rounded-full p-0 has-[>svg]:px-0 size-[160px] bg-[#FFF] border-[2px] border-dashed border-[#E4E4E7]"
+                    >
+                      <Camera className="size-[28px] stroke-[#18181B] stroke-opacity-[0.5] stroke-[1.5] absolute z-0" />
 
-                    <FormControl>
-                      <Input
-                        placeholder=""
-                        type="file"
-                        {...fileRef}
-                        onChange={(event) => {
-                          field.onChange(event.target?.files?.[0] ?? undefined);
-                        }}
-                      />
-                    </FormControl>
+                      <FormControl>
+                        <Input
+                          className="flex absolute opacity-0 size-[50px]"
+                          placeholder=""
+                          type="file"
+                          {...fileRef}
+                          onChange={(event) => {
+                            if (!event.target.files) return;
+                            field.onChange(
+                              event.target?.files?.[0] ?? undefined
+                            );
+                            setImage(
+                              URL.createObjectURL(event.target.files[0])
+                            );
+                          }}
+                        />
+                      </FormControl>
+                      {image && (
+                        <div className="flex relative w-full h-full justify-center items-center rounded-full">
+                          <Image
+                            fill={true}
+                            src={image}
+                            alt="image"
+                            id="avatarImage"
+                            className="rounded-full w-[160px] h-[160px]"
+                          />
+                        </div>
+                      )}
+                    </Button>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="profileName"
@@ -134,6 +158,7 @@ export const CreateProfile = () => {
                     <FormLabel>About</FormLabel>
                     <FormControl>
                       <Input
+                        className="flex h-[131px] px-3 py-2 placeholder:absolute placeholder:top-[10px] placeholder:left-[10px] "
                         placeholder="Write about yourself here"
                         {...field}
                       />
@@ -156,10 +181,10 @@ export const CreateProfile = () => {
                 )}
               />
             </CardContent>
-            <CardFooter>
+            <CardFooter className="flex justify-end">
               <Button
                 type="submit"
-                className="flex px-4 py-2 w-full h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]"
+                className="flex px-4 py-2 w-[246px] h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]"
               >
                 Continue
               </Button>
