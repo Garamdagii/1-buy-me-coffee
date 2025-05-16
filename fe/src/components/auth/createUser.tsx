@@ -51,12 +51,12 @@ export const CreateUsername = ({
       });
     } catch (error) {
       console.error(error, "err");
-      // if (
-      //   error.response &&
-      //   (error.response.status === 401 || error.response.status === 404)
-      // ) {
-      //   setError(error.response.data.message);
-      // }
+      if (
+        error.response &&
+        (error.response.status === 401 || error.response.status === 404)
+      ) {
+        setError(error.response.data.message);
+      }
     }
     setUsername(values.username);
     setStep(1);
@@ -87,8 +87,8 @@ export const CreateUsername = ({
                     <FormLabel>Username</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter username here" {...field} />
-                      {/* {error && <p>{error}</p>} */}
                     </FormControl>
+                    {error && <p>{error}</p>}
                     <FormMessage />
                   </FormItem>
                 )}

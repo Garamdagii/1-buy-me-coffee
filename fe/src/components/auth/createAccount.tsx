@@ -22,6 +22,7 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const formSchema = z.object({
   email: z
@@ -32,6 +33,8 @@ const formSchema = z.object({
 });
 
 export const CreateAccount = ({ username }: { username: string }) => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,6 +54,8 @@ export const CreateAccount = ({ username }: { username: string }) => {
     } catch (error) {
       console.error(error, "err");
     }
+
+    router.push("/profile");
   };
 
   return (
