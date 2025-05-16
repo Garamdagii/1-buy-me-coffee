@@ -1,6 +1,6 @@
 "use client";
 
-import { z, ZodError } from "zod";
+import { unknown, z, ZodError } from "zod";
 import {
   Card,
   CardContent,
@@ -23,10 +23,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
-  username: z.string().min(2, { message: "Please enter at least 2 letters" }),
+  username: z.string().min(1, { message: "Please enter a username" }),
 });
 
 export const CreateUsername = ({
@@ -36,7 +35,7 @@ export const CreateUsername = ({
   setStep: Dispatch<SetStateAction<number>>;
   setUsername: Dispatch<SetStateAction<string>>;
 }) => {
-  const [error, setError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,21 +44,19 @@ export const CreateUsername = ({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    // try {
-    //   const response = await axios.post("http://localhost:8000/signup", {
-    //     username: values.username,
-    //   });
-    // } catch (error) {
-    //   console.error(error, "err");
-    //   if (
-    //     error.response &&
-    //     (error.response.status === 401 || error.response.status === 404)
-    //   ) {
-    //     setError(error.response.data.message);
-    //   }
-    // }
+    try {
+      const response = await axios.post("http://localhost:8000/signup", {
+        username: values.username,
+      });
+      setStep(1);
+      console.log(response.data);
+    } catch (error: any) {
+      // console.error(error, "err");
+      if (error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      }
+    }
     setUsername(values.username);
-    setStep(1);
   };
 
   return (
@@ -88,12 +85,15 @@ export const CreateUsername = ({
                     <FormControl>
                       <Input placeholder="Enter username here" {...field} />
                     </FormControl>
-                    {error && <p>{error}</p>}
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </CardContent>
+
             <CardFooter>
               <Button
                 type="submit"

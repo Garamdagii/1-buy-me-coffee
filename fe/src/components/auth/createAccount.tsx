@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z
@@ -35,6 +36,7 @@ const formSchema = z.object({
 export const CreateAccount = ({ username }: { username: string }) => {
   const router = useRouter();
 
+  const [errorMessage, setErrorMessage] = useState<string>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,18 +46,20 @@ export const CreateAccount = ({ username }: { username: string }) => {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    // try {
-    //   const response = await axios.post("http://localhost:8000/user", {
-    //     username: username,
-    //     email: values.email,
-    //     password: values.password,
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error, "err");
-    // }
-
-    router.push("/profile");
+    try {
+      const response = await axios.post("http://localhost:8000/user", {
+        username: username,
+        email: values.email,
+        password: values.password,
+      });
+      console.log(response.data);
+      // router.push("/profile");
+    } catch (error: any) {
+      // console.error(error, "err");
+      if (error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      }
+    }
   };
 
   return (
@@ -88,6 +92,9 @@ export const CreateAccount = ({ username }: { username: string }) => {
                         {...field}
                       />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -105,6 +112,9 @@ export const CreateAccount = ({ username }: { username: string }) => {
                         {...field}
                       />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}

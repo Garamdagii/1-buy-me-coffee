@@ -27,13 +27,13 @@ import { useState } from "react";
 const formSchema = z.object({
   email: z
     .string({ required_error: "Email is required." })
-    .min(2, { message: "Please enter at least 2 letters" })
+    .min(1, { message: "Please enter your email" })
     .email("Please enter a valid email"),
-  password: z.string().min(4, { message: "Please enter at least 4 letters" }),
+  password: z.string().min(1, { message: "Please enter a password" }),
 });
 
 export const LogInAccount = () => {
-  const [error, setError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,14 +49,11 @@ export const LogInAccount = () => {
         password: values.password,
       });
       console.log(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error, "err");
-      // if (
-      //   error.response &&
-      //   (error.response.status === 401 || error.response.status === 404)
-      // ) {
-      //   setError(error.response.data.message);
-      // }
+      if (error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      }
     }
   };
 
@@ -90,6 +87,9 @@ export const LogInAccount = () => {
                         {...field}
                       />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -107,6 +107,9 @@ export const LogInAccount = () => {
                         {...field}
                       />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
