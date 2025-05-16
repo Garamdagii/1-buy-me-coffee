@@ -20,9 +20,9 @@ model User {
 
 model Profile {
   id               Int     @id @default(autoincrement())
-  profileName            String
+  profileName     String
   about           String
-  avatarImage     String
+  avatarImage     String?
   socialMediaURL	String
   createdAt	      DateTime @default(now())
   updatedAt	      DateTime @default(now()) @updatedAt
