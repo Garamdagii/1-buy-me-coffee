@@ -1,3 +1,9 @@
+import { CartInfo } from "@/components/profile/cartInfo";
+
 export default function Home() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <CartInfo />
+    </div>
+  );
 }

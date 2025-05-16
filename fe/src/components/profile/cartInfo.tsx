@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -30,15 +29,18 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { z } from "zod";
+import axios from "axios";
 
 type Data = {
   name: { common: string; official: string };
 };
 
+
+
 const formSchema = z.object({
   selectCountry: z.string().min(1, { message: "Select country to continue" }),
-  firstName: z.string().min(2, { message: "Please enter at least 2 letters" }),
-  lastName: z.string().min(2, { message: "Please enter at least 2 letters" }),
+  firstName: z.string().min(1, { message: "Please enter your first name" }),
+  lastName: z.string().min(1, { message: "Please enter your last name" }),
   cardNumber: z.string(),
   expiryMonth: z.string(),
   expiryYear: z.string(),
@@ -47,6 +49,7 @@ const formSchema = z.object({
 
 export const CartInfo = () => {
   const [countryData, setCountryData] = useState<Data[]>([]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,7 +73,7 @@ export const CartInfo = () => {
       .then((res) => setCountryData(res.data));
   };
 
-  const handleCard = async (values: z.infer<typeof formSchema>) => {
+  const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("http://localhost:8000/card", values);
       console.log(response.data);
@@ -86,7 +89,7 @@ export const CartInfo = () => {
       <Card className="flex border-none outline-none shadow-none w-[510px] gap-6">
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleCard)}
+            onSubmit={form.handleSubmit(handleOnSubmit)}
             className="flex flex-col gap-6"
           >
             <CardHeader>
@@ -220,7 +223,7 @@ export const CartInfo = () => {
                     <FormItem className="flex flex-col w-full">
                       <FormLabel>CVC</FormLabel>
                       <FormControl>
-                        <Input placeholder="CVC" type="tel" {...field} />
+                        <Input placeholder="CVC" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
