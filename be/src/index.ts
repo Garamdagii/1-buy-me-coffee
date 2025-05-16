@@ -1,7 +1,6 @@
 import express, { json } from "express";
 import { userRouter } from "./routes/user";
 import cors from "cors";
-import { profileRouter } from "./routes/profile";
 import { signinRouter } from "./routes/auth-signin";
 import { checkUserRouter } from "./routes/auth-signup";
 
@@ -16,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
-app.use("/profile", profileRouter);
+// app.use("/profile", profileRouter);
 app.use("/signup", checkUserRouter);
 app.use("/signin", signinRouter);
 

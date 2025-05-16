@@ -13,9 +13,9 @@ export const SignIn = async (req: Request, res: Response) => {
     });
     if (!user)
       return res
-        .status(404)
+        .status(401)
         .send({
-          message: "User not found.",
+          message: "Email or password is incorrect.",
         })
         .end();
 

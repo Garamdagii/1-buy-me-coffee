@@ -35,8 +35,6 @@ type Data = {
   name: { common: string; official: string };
 };
 
-
-
 const formSchema = z.object({
   selectCountry: z.string().min(1, { message: "Select country to continue" }),
   firstName: z.string().min(1, { message: "Please enter your first name" }),
