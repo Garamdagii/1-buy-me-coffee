@@ -1,6 +1,6 @@
 "use client";
 
-import { unknown, z, ZodError } from "zod";
+import { z } from "zod";
 import {
   Card,
   CardContent,
@@ -51,7 +51,6 @@ export const CreateUsername = ({
       setStep(1);
       console.log(response.data);
     } catch (error: any) {
-      // console.error(error, "err");
       if (error.response.data.message) {
         setErrorMessage(error.response.data.message);
       }

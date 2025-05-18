@@ -1,6 +1,6 @@
 "use client";
 
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import {
   Card,
   CardContent,
@@ -53,9 +53,8 @@ export const CreateAccount = ({ username }: { username: string }) => {
         password: values.password,
       });
       console.log(response.data);
-      // router.push("/profile");
+      router.push("/profile");
     } catch (error: any) {
-      // console.error(error, "err");
       if (error.response.data.message) {
         setErrorMessage(error.response.data.message);
       }

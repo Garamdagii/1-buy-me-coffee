@@ -1,6 +1,6 @@
 "use client";
 
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import {
   Card,
   CardContent,
@@ -21,7 +21,6 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const formSchema = z.object({
@@ -50,7 +49,6 @@ export const LogInAccount = () => {
       });
       console.log(response.data);
     } catch (error: any) {
-      console.error(error, "err");
       if (error.response.data.message) {
         setErrorMessage(error.response.data.message);
       }
