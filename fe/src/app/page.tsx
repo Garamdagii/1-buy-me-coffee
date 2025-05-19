@@ -1,3 +1,9 @@
+import { UserInNavbar } from "@/components/navigationButton";
+
 export default function Home() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <UserInNavbar />
+    </div>
+  );
 }
