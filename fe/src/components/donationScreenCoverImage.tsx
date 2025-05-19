@@ -30,7 +30,7 @@ const formSchema = z.object({
 });
 
 export const CoverImage = () => {
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -44,10 +44,7 @@ export const CoverImage = () => {
   return (
     <div className="flex w-screen h-[319px] bg-[#F4F4F5] justify-center items-center relative">
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleOnSubmit)}
-          className="space-y-8"
-        >
+        <form onSubmit={form.handleSubmit(handleOnSubmit)}>
           <FormField
             control={form.control}
             name="coverImage"
@@ -64,25 +61,26 @@ export const CoverImage = () => {
                       type="file"
                       {...fileRef}
                       onChange={(event) => {
+                        if (!event.target.files) return;
                         field.onChange(event.target?.files?.[0] ?? undefined);
                         setImage(URL.createObjectURL(event.target.files[0]));
                       }}
                     />
                   </FormControl>
                   {image && (
-                    <div className="flex relative w-screen h-[319px]">
+                    <div className="flex w-screen h-[319px] justify-center items-center relative">
                       <Image
-                        layout="fill"
-                        // fill={true}
+                        fill={true}
                         src={image}
                         alt="image"
                         id="coverImage"
-                        priority
+                        className="w-[1440px] h-[319px]"
                         // style={{ width: "auto", height: "auto" }}
                       />
                     </div>
                   )}
                 </Button>
+
                 <FormMessage />
               </FormItem>
             )}
