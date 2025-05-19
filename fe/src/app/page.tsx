@@ -1,3 +1,9 @@
+import { DonationDashboard } from "@/components/donationDashboard";
+
 export default function Home() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <DonationDashboard />
+    </div>
+  );
 }
