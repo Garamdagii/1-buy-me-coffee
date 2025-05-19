@@ -1,3 +1,9 @@
+import { DonationScreenProfile } from "@/components/donation-screen/donationScreenProfile";
+
 export default function Home() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <DonationScreenProfile />
+    </div>
+  );
 }
