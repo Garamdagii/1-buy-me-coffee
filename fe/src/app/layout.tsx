@@ -1,13 +1,12 @@
 "use client";
 
 // import type { Metadata } from "next";
-import { Cookie, Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Logo } from "@/components";
 import { AuthContext } from "./context/authContext";
 import { useState } from "react";
-import { cookies } from "next/headers";
-import { parseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import Cookies from "js-cookie";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [users, setUsers] = useState("user");
-  
+  const token = Cookies.get("token");
+
   return (
     <html lang="en">
       <body
