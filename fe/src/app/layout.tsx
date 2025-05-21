@@ -7,6 +7,7 @@ import { Logo } from "@/components";
 import { AuthContext } from "./context/authContext";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,15 +29,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [users, setUsers] = useState("user");
+  const [user, setUser] = useState("user");
   const token = Cookies.get("token");
+  console.log(token);
+
+  if (token) {
+    const decoded = jwtDecode(token);
+    console.log(decoded);
+  }
+
+
+  
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthContext.Provider value={{ users, setUsers }}>
+        <AuthContext.Provider value={{ user, setUser }}>
           <Logo />
           {children}
         </AuthContext.Provider>
