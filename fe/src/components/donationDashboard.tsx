@@ -1,9 +1,6 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   Select,
   SelectContent,
@@ -13,26 +10,21 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import dayjs from "dayjs";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const mocDataDonation = [
   {
@@ -64,13 +56,9 @@ const donationAmounts = [
   },
 ];
 
-const FormSchema = z.object({
-  donationAmount: z.string().refine((value) => value.length === 0, {
-    message: "You have to select at least one item.",
-  }),
-});
-
 export const DonationDashboard = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
   const [selectedValue, setSelectedValue] = useState<string>("10");
   const date = dayjs();
   const subtractedDate = date
@@ -85,24 +73,6 @@ export const DonationDashboard = () => {
   const donationAmountby = filteredByDate.map(
     (donation) => (totalDonationAmount += donation.amount)
   );
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      donationAmount: "",
-    },
-  });
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
-  }
 
   return (
     <div>
@@ -132,33 +102,54 @@ export const DonationDashboard = () => {
         <div>
           <h3>Recent transactions</h3>
           <div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
-                <FormField
-                  control={form.control}
-                  name="donationAmount"
-                  render={({ field }) => ( 
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Use different settings for my mobile devices
-                        </FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit">Submit</Button>
-              </form>
-            </Form>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="gap-2"
+                >
+                  <ChevronDown className="opacity-50" />
+                  Amount{" "}
+                  {value &&
+                    donationAmounts.find((amount) => amount.amount === value)
+                      ?.amount}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  {/* <CommandInput placeholder="Search framework..." className="h-9" /> */}
+                  <CommandList>
+                    <CommandEmpty>No framework found.</CommandEmpty>
+                    <CommandGroup>
+                      {donationAmounts.map((el) => (
+                        <CommandItem
+                          key={el.id}
+                          value={el.amount}
+                          onSelect={(currentValue) => {
+                            setValue(
+                              currentValue === value ? "" : currentValue
+                            );
+                            setOpen(false);
+                          }}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="terms" />
+                            <label
+                              htmlFor="terms"
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              {el.amount}
+                            </label>
+                          </div>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
