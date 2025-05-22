@@ -11,15 +11,24 @@ export const verifyToken = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies.get("token");
-  console.log(token);
+  try {
+    const { token } = req.cookies;
 
-  if (!token)
-    return res.status(401).send({
-      success: false,
-      message: "Unauthorized",
-    });
-  const decode = jwt.verify(token, secret_key as string);
-  //   console.log(decode);
-  next();
+    if (!token)
+      return res.status(401).send({
+        success: false,
+        message: "Unauthorized",
+      });
+    const decode = jwt.verify(token, secret_key as string);
+    console.log(decode, "decode");
+    next();
+  } catch (error) {
+    return res
+      .status(500)
+      .send({
+        success: false,
+        message: error,
+      })
+      .end();
+  }
 };
