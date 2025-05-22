@@ -12,6 +12,8 @@ export const verifyToken = (
   next: NextFunction
 ) => {
   const token = req.cookies.get("token");
+  console.log(token);
+
   if (!token)
     return res.status(401).send({
       success: false,
