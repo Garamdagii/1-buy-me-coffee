@@ -28,10 +28,10 @@ export const SignIn = async (req: Request, res: Response) => {
         })
         .end();
 
-    const token = jwt.sign({ user: user.id }, secret_key as any, {
+    const token = jwt.sign({ ...user }, secret_key as any, {
       expiresIn: 3600,
     });
-    // console.log(token, "token")
+    // console.log(token, "token");
     return res
       .cookie("token", token, { maxAge: 60 * 1000 * 20, secure: false })
       .end();

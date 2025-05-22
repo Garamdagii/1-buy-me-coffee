@@ -6,8 +6,6 @@ import "./globals.css";
 import { Logo } from "@/components";
 import { AuthContext } from "./context/authContext";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 const geistSans = Geist({
@@ -36,7 +34,7 @@ export default function RootLayout({
     try {
       const response = await axios.get(`http://localhost:8000/profile`);
       console.log(response);
-      setProfile(response.data);
+      // setProfile(response.data);
     } catch (error) {
       console.error(error, "err");
     }
@@ -51,10 +49,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <AuthContext.Provider value={{ user, setUser }}> */}
-        <Logo />
-        {children}
-        {/* </AuthContext.Provider> */}
+        <AuthContext.Provider value={{ profile, setProfile }}>
+          <Logo />
+          {children}
+        </AuthContext.Provider>
       </body>
     </html>
   );

@@ -11,7 +11,7 @@ export const profileRouter = express.Router();
 
 profileRouter
   .post("/", createProfile as any)
-  .get("/", findProfile as any)
-  .get("/:id", findProfileByID as any)
+  .get("/all", findProfile as any)
+  .get("/", findProfileByID as any)
   .put("/:id", updateProfile as any)
   .delete("/", deleteProfile as any);

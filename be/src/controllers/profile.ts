@@ -1,8 +1,14 @@
 import { Request, Response } from "express";
 import { prisma } from "../utils/prisma";
+import jwt from "jsonwebtoken";
+const secret_key = process.env.SECRET_KEY;
 
 export const createProfile = async (req: Request, res: Response) => {
-  const { profileName, about, avatarImage, socialMediaURL, userId } = req.body;
+  const { token } = req.cookies;
+  const decode = jwt.verify(token, secret_key as string);
+  const userId = Object.values(decode)[0];
+
+  const { profileName, about, avatarImage, socialMediaURL } = req.body;
   try {
     const response = await prisma.profile.create({
       data: {
@@ -26,7 +32,9 @@ export const createProfile = async (req: Request, res: Response) => {
   }
 };
 
-export const findProfile = async (_: never, res: Response) => {
+export const findProfile = async (req: Request, res: Response) => {
+  const { token } = req.cookies;
+  console.log(token);
   try {
     const response = await prisma.profile.findMany();
     return res.send({
@@ -44,12 +52,13 @@ export const findProfile = async (_: never, res: Response) => {
 
 export const findProfileByID = async (req: Request, res: Response) => {
   const { token } = req.cookies;
-  
 
+  const decode = jwt.verify(token, secret_key as string);
+  const userId = Object.values(decode)[0];
 
   try {
     const response = await prisma.profile.findFirst({
-      where: { userId: Number(userId) },
+      where: { userId: userId },
     });
     return res.send({
       success: true,
