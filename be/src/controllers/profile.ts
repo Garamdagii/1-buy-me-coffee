@@ -41,6 +41,25 @@ export const findProfile = async (_: never, res: Response) => {
   }
 };
 
+export const findProfileByID = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const response = await prisma.profile.findFirst({
+      where: { id: Number(id) },
+    });
+    return res.send({
+      success: true,
+      message: response,
+    });
+  } catch (error) {
+    console.error(error, "err");
+    return res.send({
+      success: false,
+      message: error,
+    });
+  }
+};
+
 export const updateProfile = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { profileName, about, avatarImage, socialMediaURL } = req.body;

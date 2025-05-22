@@ -8,6 +8,7 @@ import { AuthContext } from "./context/authContext";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,16 +31,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [user, setUser] = useState("user");
+  const [profile, setProfile] = useState();
   const token = Cookies.get("token");
-  console.log(token);
+  // console.log(token);
 
   if (token) {
     const decoded = jwtDecode(token);
     console.log(decoded);
   }
-
-
-  
 
   return (
     <html lang="en">
