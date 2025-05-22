@@ -12,24 +12,30 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { Dispatch, SetStateAction, useState } from "react";
 
 const formSchema = z.object({
-  username: z
-    .string({ required_error: "Username" })
-    .min(8, { message: "Please enter at least 8 letters" }),
+  username: z.string().min(1, { message: "Please enter a username" }),
 });
 
-export const CreateUsername = ({ onClick }: { onClick: () => void }) => {
+export const CreateUsername = ({
+  setStep,
+  setUsername,
+}: {
+  setStep: Dispatch<SetStateAction<number>>;
+  setUsername: Dispatch<SetStateAction<string>>;
+}) => {
+  const [errorMessage, setErrorMessage] = useState<string>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,8 +43,19 @@ export const CreateUsername = ({ onClick }: { onClick: () => void }) => {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values.username);
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("http://localhost:8000/signup", {
+        username: values.username,
+      });
+      setStep(1);
+      console.log(response.data);
+    } catch (error: any) {
+      if (error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      }
+    }
+    setUsername(values.username);
   };
 
   return (
@@ -67,14 +84,18 @@ export const CreateUsername = ({ onClick }: { onClick: () => void }) => {
                     <FormControl>
                       <Input placeholder="Enter username here" {...field} />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </CardContent>
+
             <CardFooter>
               <Button
-                onClick={onClick}
+                type="submit"
                 className="flex px-4 py-2 w-full h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]"
               >
                 Continue

@@ -9,7 +9,10 @@ const app = express();
 const port = 8000;
 
 app.use(json());
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 app.get("/", (req, res) => {
   res.send("hello");
