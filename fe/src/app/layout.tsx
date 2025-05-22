@@ -5,7 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Logo } from "@/components";
 import { AuthContext } from "./context/authContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
@@ -30,25 +30,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [user, setUser] = useState("user");
   const [profile, setProfile] = useState();
-  const token = Cookies.get("token");
-  // console.log(token);
 
-  if (token) {
-    const decoded = jwtDecode(token);
-    console.log(decoded);
-  }
+  const fetchProfileData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/profile`);
+      console.log(response);
+      setProfile(response.data);
+    } catch (error) {
+      console.error(error, "err");
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthContext.Provider value={{ user, setUser }}>
-          <Logo />
-          {children}
-        </AuthContext.Provider>
+        {/* <AuthContext.Provider value={{ user, setUser }}> */}
+        <Logo />
+        {children}
+        {/* </AuthContext.Provider> */}
       </body>
     </html>
   );

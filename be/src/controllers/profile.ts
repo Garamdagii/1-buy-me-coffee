@@ -43,10 +43,13 @@ export const findProfile = async (_: never, res: Response) => {
 };
 
 export const findProfileByID = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { token } = req.cookies;
+  
+
+
   try {
     const response = await prisma.profile.findFirst({
-      where: { id: Number(id) },
+      where: { userId: Number(userId) },
     });
     return res.send({
       success: true,
