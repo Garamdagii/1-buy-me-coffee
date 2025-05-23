@@ -96,13 +96,12 @@ export const CartInfo = () => {
   };
 
   const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    // try {
-    //   const response = await axios.post("http://localhost:8000/card", values);
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.error(error, "err");
-    // }
+    try {
+      const response = await axios.post("http://localhost:8000/card", values);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error, "err");
+    }
   };
 
   const selectRef = form.register("selectCountry");
