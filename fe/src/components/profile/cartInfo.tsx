@@ -35,11 +35,35 @@ type Data = {
   name: { common: string; official: string };
 };
 
+const validateCardNumber = (cardNumber: string) => {
+  const nums = cardNumber.replaceAll(" ", "").split("").reverse();
+  let sum = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (i % 2 !== 0) {
+      let double = Number(nums[i]) * 2;
+      if (double > 9) {
+        sum += double - 9;
+      } else {
+        sum += double;
+      }
+    } else {
+      sum += Number(nums[i]);
+    }
+  }
+  console.log(cardNumber, sum % 10 === 0);
+
+  return sum % 10 === 0;
+};
+
 const formSchema = z.object({
   selectCountry: z.string().min(1, { message: "Select country to continue" }),
   firstName: z.string().min(1, { message: "Please enter your first name" }),
   lastName: z.string().min(1, { message: "Please enter your last name" }),
-  cardNumber: z.string(),
+  cardNumber: z
+    .string()
+    .refine((cardNumber) => validateCardNumber(cardNumber), {
+      message: "Please enter a valid card number",
+    }),
   expiryMonth: z.string(),
   expiryYear: z.string(),
   cardCVC: z.string(),
@@ -72,12 +96,13 @@ export const CartInfo = () => {
   };
 
   const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await axios.post("http://localhost:8000/card", values);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error, "err");
-    }
+    console.log(values);
+    // try {
+    //   const response = await axios.post("http://localhost:8000/card", values);
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error(error, "err");
+    // }
   };
 
   const selectRef = form.register("selectCountry");
@@ -164,7 +189,7 @@ export const CartInfo = () => {
                     <FormLabel>Enter card number</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="xxxx-xxxx-xxxx-xxxx"
+                        placeholder="xxxx xxxx xxxx xxxx"
                         type="tel"
                         {...field}
                       />
