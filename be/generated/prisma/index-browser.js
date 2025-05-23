@@ -124,7 +124,9 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   username: 'username',
-  password: 'password'
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ProfileScalarFieldEnum = {
@@ -133,6 +135,9 @@ exports.Prisma.ProfileScalarFieldEnum = {
   about: 'about',
   avatarImage: 'avatarImage',
   socialMediaURL: 'socialMediaURL',
+  backgroundImage: 'backgroundImage',
+  successMessage: 'successMessage',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -145,6 +150,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

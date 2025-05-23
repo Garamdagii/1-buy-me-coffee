@@ -12,26 +12,31 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z
     .string()
-    .min(8, { message: "Please enter at least 8 letters" })
+    .min(5, { message: "Please enter at least 5 letters" })
     .email("Please enter a valid email"),
-  password: z.string().min(4, { message: "Please enter at least 4 letters" }),
+  password: z.string().min(8, { message: "Please enter at least 8 letters" }),
 });
 
-export const CreateAccount = ({ onClick }: { onClick: () => void }) => {
+export const CreateAccount = ({ username }: { username: string }) => {
+  const router = useRouter();
+
+  const [errorMessage, setErrorMessage] = useState<string>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +45,20 @@ export const CreateAccount = ({ onClick }: { onClick: () => void }) => {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("http://localhost:8000/user", {
+        username: username,
+        email: values.email,
+        password: values.password,
+      });
+      console.log(response.data);
+      router.push("/profile");
+    } catch (error: any) {
+      if (error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      }
+    }
   };
 
   return (
@@ -54,7 +71,7 @@ export const CreateAccount = ({ onClick }: { onClick: () => void }) => {
           >
             <CardHeader>
               <CardTitle className="text-2xl font-semibold leading-[32px] text-[#09090B]">
-                Welcome,
+                Welcome, {username}
               </CardTitle>
               <CardDescription className="text-sm leading-[20px] text-[#71717A]">
                 Connect email and set a password
@@ -74,6 +91,9 @@ export const CreateAccount = ({ onClick }: { onClick: () => void }) => {
                         {...field}
                       />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -91,16 +111,16 @@ export const CreateAccount = ({ onClick }: { onClick: () => void }) => {
                         {...field}
                       />
                     </FormControl>
+                    {errorMessage && (
+                      <p className="text-sm text-red-500">{errorMessage}</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </CardContent>
             <CardFooter>
-              <Button
-                onClick={onClick}
-                className="flex px-4 py-2 w-full h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]"
-              >
+              <Button className="flex px-4 py-2 w-full h-[40px] items-center rounded-md opacity-[0.2] bg-[#18181B]">
                 Continue
               </Button>
             </CardFooter>

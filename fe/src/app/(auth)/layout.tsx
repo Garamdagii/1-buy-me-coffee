@@ -1,4 +1,5 @@
 import { LayoutImage } from "@/components";
+import { HeaderButton } from "@/components/headerButton";
 
 export default function AuthLayout({
   children,
