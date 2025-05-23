@@ -30,12 +30,10 @@ const formSchema = z.object({
   avatarImage:
     typeof window === "undefined"
       ? z.any()
-      : z
-          .instanceof(FileList)
-          // .refine((files) => files?.length >= 1, {
-          //   message: "Image is required",
-          // })
-          .transform((FileList) => FileList[0]),
+      : z.instanceof(FileList).transform((FileList) => FileList[0]),
+  // .refine((files) => files?.length >= 1, {
+  //   message: "Image is required",
+  // }),
   profileName: z.string().min(1, { message: "Please enter name" }),
   about: z.string().min(1, { message: "Please enter info about yourself" }),
   socialMediaURL: z.string().url(),
@@ -57,24 +55,25 @@ export const CreateProfile = ({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!values.avatarImage) {
-      console.log("error");
-      return;
-    }
-    const imageUrl = await uploadImage(values.avatarImage);
+    console.log(values);
+    // if (!values.avatarImage) {
+    //   console.log("error");
+    //   return;
+    // }
+    // const imageUrl = await uploadImage(values.avatarImage);
 
-    try {
-      const response = await axios.post("http://localhost:8000/profile", {
-        profileName: values.profileName,
-        about: values.about,
-        socialMediaURL: values.socialMediaURL,
-        avatarImage: imageUrl,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error, "err");
-    }
-    setStep(1);
+    // try {
+    //   const response = await axios.post("http://localhost:8000/profile", {
+    //     profileName: values.profileName,
+    //     about: values.about,
+    //     socialMediaURL: values.socialMediaURL,
+    //     avatarImage: imageUrl,
+    //   });
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error(error, "err");
+    // }
+    // setStep(1);
   };
 
   const fileRef = form.register("avatarImage");
