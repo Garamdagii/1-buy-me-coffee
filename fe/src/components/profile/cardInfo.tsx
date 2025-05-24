@@ -28,7 +28,7 @@ import {
 } from "../ui/select";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { z } from "zod";
+import { date, z } from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -60,12 +60,13 @@ const formSchema = z.object({
   lastName: z.string().min(1, { message: "Please enter your last name" }),
   cardNumber: z
     .string()
+    .min(1, { message: "Please enter a card number" })
     .refine((cardNumber) => validateCardNumber(cardNumber), {
       message: "Please enter a valid card number",
     }),
-  expiryMonth: z.string(),
-  expiryYear: z.string(),
-  cardCVC: z.string(),
+  expiryMonth: z.string().min(1, { message: "Please enter a expiry month" }),
+  expiryYear: z.string().min(1, { message: "Please enter a expiry year" }),
+  cardCVC: z.string().min(1, { message: "Please enter CVC number" }),
 });
 
 export const CardInfo = () => {
@@ -209,7 +210,7 @@ export const CardInfo = () => {
                         <Input
                           placeholder="Month"
                           type="number"
-                          min="1"
+                          min="01"
                           max="12"
                           step="1"
                           {...field}
