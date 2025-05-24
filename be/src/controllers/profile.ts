@@ -47,9 +47,9 @@ export const findProfile = async (_: never, res: Response) => {
     });
   }
 };
+
 export const findProfileById = async (req: Request, res: Response) => {
-  const token = req.cookies.token;
-  console.log(token);
+  const { token }   = req.cookies;
   const decode = jwt.verify(token, secret_key as string);
   const userId = Object.values(decode)[0];
   try {

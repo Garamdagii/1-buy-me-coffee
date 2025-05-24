@@ -30,6 +30,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { z } from "zod";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type Data = {
   name: { common: string; official: string };
@@ -50,8 +51,6 @@ const validateCardNumber = (cardNumber: string) => {
       sum += Number(nums[i]);
     }
   }
-  console.log(cardNumber, sum % 10 === 0);
-
   return sum % 10 === 0;
 };
 
@@ -69,8 +68,9 @@ const formSchema = z.object({
   cardCVC: z.string(),
 });
 
-export const CartInfo = () => {
+export const CardInfo = () => {
   const [countryData, setCountryData] = useState<Data[]>([]);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -90,7 +90,7 @@ export const CartInfo = () => {
   }, []);
 
   const fetchCountriesData = async () => {
-    const fetchData = await axios
+    const response = await axios
       .get("https://restcountries.com/v3.1/all?fields=name")
       .then((res) => setCountryData(res.data));
   };
@@ -102,6 +102,7 @@ export const CartInfo = () => {
     } catch (error) {
       console.error(error, "err");
     }
+    router.push("/profile-page");
   };
 
   const selectRef = form.register("selectCountry");
