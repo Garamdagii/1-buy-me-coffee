@@ -1,3 +1,9 @@
+import { CardInfo } from "@/components/profile/cardInfo";
+
 export default function Home() {
-  return <div>stage</div>;
+  return (
+    <div>
+      <CardInfo />
+    </div>
+  );
 }
