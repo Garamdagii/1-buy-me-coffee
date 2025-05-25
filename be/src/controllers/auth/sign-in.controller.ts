@@ -13,9 +13,9 @@ export const SignIn = async (req: Request, res: Response) => {
     });
     if (!user)
       return res
-        .status(404)
+        .status(401)
         .send({
-          message: "User not found.",
+          message: "Email or password is incorrect.",
         })
         .end();
 
@@ -33,7 +33,7 @@ export const SignIn = async (req: Request, res: Response) => {
     });
     // console.log(token, "token");
     return res
-      .cookie("token", token, { maxAge: 60 * 1000 * 20, secure: false })
+      .cookie("token", token, { maxAge: 60 * 1000 * 30, secure: false})
       .end();
   } catch (error) {
     return res

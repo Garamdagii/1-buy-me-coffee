@@ -71,9 +71,6 @@ export const LogInAccount = () => {
               <CardTitle className="text-2xl font-semibold leading-[32px] text-[#09090B]">
                 Welcome back
               </CardTitle>
-              {/* <CardDescription className="text-sm leading-[20px] text-[#71717A]">
-                Connect email and set a password
-              </CardDescription> */}
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
               <FormField

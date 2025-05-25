@@ -4,9 +4,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Logo } from "@/components";
-import { AuthContext } from "./context/authContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { AuthContext } from "@/context/authContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,17 +28,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState([]);
 
   const fetchProfileData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/profile`);
-      console.log(response);
-      // setProfile(response.data);
+      const response = await axios.get(`http://localhost:8000/profile`, {
+        withCredentials: true,
+      });
+      setProfile(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error, "err");
     }
   };
+  console.log(profile, "pro");
 
   useEffect(() => {
     fetchProfileData();
