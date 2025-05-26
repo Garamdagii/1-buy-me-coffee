@@ -51,7 +51,7 @@ export const CoverImage = () => {
             render={({ field }) => (
               <FormItem>
                 {/* <FormLabel>Username</FormLabel> */}
-                <Button className="flex gap-2 px-4 py-2 h-[40px] justify-center items-center rounded-md bg-[#18181B]">
+                <Button className="flex absolute gap-2 px-4 py-2 h-[40px] justify-center items-center rounded-md bg-[#18181B]">
                   <Camera className="size-[16px] stroke-[#FAFAFA]" />
                   Add a cover image
                   <FormControl>
@@ -68,13 +68,13 @@ export const CoverImage = () => {
                     />
                   </FormControl>
                   {image && (
-                    <div className="flex w-full h-[319px] justify-center items-center relative">
+                    <div className="flex w-full h-full relative pt-[56px]">
                       <Image
                         fill={true}
                         src={image}
                         alt="image"
                         id="coverImage"
-                        className="w-screen h-[319px]"
+                        className="w-[1440px] h-[319px]"
                         // style={{ width: "auto", height: "auto" }}
                       />
                     </div>

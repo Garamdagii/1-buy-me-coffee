@@ -6,7 +6,6 @@ export default function Home() {
     <div>
       <div className="flex h-[56px]"></div>
       <CoverImage />
-      <CardInfo />
     </div>
   );
 }
