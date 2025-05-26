@@ -68,13 +68,13 @@ export const CoverImage = () => {
                     />
                   </FormControl>
                   {image && (
-                    <div className="flex w-screen h-[319px] justify-center items-center relative">
+                    <div className="flex w-full h-[319px] justify-center items-center relative">
                       <Image
                         fill={true}
                         src={image}
                         alt="image"
                         id="coverImage"
-                        className="w-[1440px] h-[319px]"
+                        className="w-screen h-[319px]"
                         // style={{ width: "auto", height: "auto" }}
                       />
                     </div>

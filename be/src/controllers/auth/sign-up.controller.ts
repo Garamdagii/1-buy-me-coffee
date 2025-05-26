@@ -5,7 +5,7 @@ export const checkUser = async (req: Request, res: Response) => {
   const { username } = req.body;
 
   try {
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.user.findFirst({
       where: { username: username },
     });
     if (existingUser) {

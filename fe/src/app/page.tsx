@@ -1,11 +1,12 @@
 import { CoverImage } from "@/components/donationScreenCoverImage";
-import { AddCoverImage } from "@/components/donationScreenImageButton";
+import { CardInfo } from "@/components/profile/cardInfo";
 
 export default function Home() {
   return (
     <div>
       <div className="flex h-[56px]"></div>
       <CoverImage />
+      <CardInfo />
     </div>
   );
 }
