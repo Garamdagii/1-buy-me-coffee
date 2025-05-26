@@ -16,19 +16,15 @@ export const UserInNavbar = () => {
   console.log(profile, "nav");
 
   return (
-    <div>
-      <div>
-        <div>
-          <Avatar>
-            <AvatarImage src={profile.message.avatarImage} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <p>{profile.message.profileName}</p>
-        </div>
-      </div>
-      <div>
+    <div className="flex justify-center items-center gap-2">
+      <Avatar>
+        <AvatarImage src={profile?.message?.avatarImage} />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+      <p>{profile?.message?.profileName}</p>
+      <div className="flex justify-center items-center">
         <Popover>
-          <PopoverTrigger>
+          <PopoverTrigger className="flex justify-center items-center">
             <ChevronDown />
           </PopoverTrigger>
           <PopoverContent>Logout</PopoverContent>

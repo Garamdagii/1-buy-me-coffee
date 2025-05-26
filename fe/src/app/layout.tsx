@@ -41,7 +41,6 @@ export default function RootLayout({
       console.error(error, "err");
     }
   };
-  console.log(profile, "pro");
 
   useEffect(() => {
     fetchProfileData();
