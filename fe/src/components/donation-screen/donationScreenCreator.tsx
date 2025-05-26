@@ -1,3 +1,10 @@
+import { CreatorProfileCard } from "./creatorProfileCard";
+
 export const DonationScreenCreator = () => {
-  return <div></div>;
+  return (
+    <div>
+      <CreatorProfileCard />
+      <CreatorProfileCard />
+    </div>
+  );
 };

@@ -1,9 +1,9 @@
-import { DonationScreenProfile } from "@/components/donation-screen/donationScreenProfile";
+import { CreatorProfileCard } from "@/components/donation-screen/creatorProfileCard";
 
 export default function Home() {
   return (
     <div>
-      <DonationScreenProfile />
+      <CreatorProfileCard />
     </div>
   );
 }
