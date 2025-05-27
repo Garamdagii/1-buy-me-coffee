@@ -6,7 +6,6 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +16,7 @@ import { Button } from "./ui/button";
 import { Camera } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { CoverImageButton } from "./coverImageButton";
 const formSchema = z.object({
   coverImage:
     typeof window === "undefined"
@@ -39,10 +39,18 @@ export const CoverImage = () => {
     console.log(values.coverImage);
   };
 
+  const saveCoverPhoto = () => {
+    <CoverImageButton
+      isChangeCover={true}
+      children="Change cover"
+      className="bg-[#F4F4F5] text-[#18181B]"
+    />;
+  };
+
   const fileRef = form.register("coverImage");
 
   return (
-    <div className="flex w-screen h-[319px] bg-[#F4F4F5] justify-center items-center relative">
+    <div className="flex w-full h-[319px] bg-[#F4F4F5] justify-center items-center absolute pt-[50px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleOnSubmit)}>
           <FormField
@@ -50,8 +58,7 @@ export const CoverImage = () => {
             name="coverImage"
             render={({ field }) => (
               <FormItem>
-                {/* <FormLabel>Username</FormLabel> */}
-                <Button className="flex absolute gap-2 px-4 py-2 h-[40px] justify-center items-center rounded-md bg-[#18181B]">
+                <Button className="flex absolute z-0 gap-2 px-4 py-2 h-[40px] justify-center items-center rounded-md bg-[#18181B]">
                   <Camera className="size-[16px] stroke-[#FAFAFA]" />
                   Add a cover image
                   <FormControl>
@@ -67,21 +74,28 @@ export const CoverImage = () => {
                       }}
                     />
                   </FormControl>
-                  {image && (
-                    <div className="flex w-full h-full relative pt-[56px]">
+                </Button>
+                <FormMessage />
+                {image && (
+                  <div>
+                    <div className="flex w-screen h-[319px] relative">
                       <Image
                         fill={true}
                         src={image}
                         alt="image"
                         id="coverImage"
-                        className="w-[1440px] h-[319px]"
+                        priority
                         // style={{ width: "auto", height: "auto" }}
                       />
                     </div>
-                  )}
-                </Button>
-
-                <FormMessage />
+                    <CoverImageButton
+                      isChangeCover={false}
+                      children="Save changes"
+                      className="bg-[#18181B] text-[#FAFAFA]"
+                      onClick={saveCoverPhoto}
+                    />
+                  </div>
+                )}
               </FormItem>
             )}
           />
